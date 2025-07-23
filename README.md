@@ -192,4 +192,4 @@ This Colab interface implementation is released under the MIT License. The Boltz
 ---
 
 **Author**: Jiorgos Kourelis  
-**Last Updated**: January 2025
+**Last Updated**: July 23, 2025
