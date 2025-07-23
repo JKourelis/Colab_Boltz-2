@@ -6,7 +6,7 @@
 
 <div align="center">
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_USERNAME/YOUR_REPO/blob/main/Boltz-2.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1kL3eCnagNs7ZDPjLecCkRlk3w4xrHBFU?usp=sharing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Paper](https://img.shields.io/badge/bioRxiv-2025.06.14.659707-red.svg)](https://doi.org/10.1101/2025.06.14.659707)
 [![Boltz-1](https://img.shields.io/badge/bioRxiv-2024.11.19.624167-red.svg)](https://doi.org/10.1101/2024.11.19.624167)
@@ -15,107 +15,133 @@
 
 ## Overview
 
-This repository provides a comprehensive Google Colab implementation for **Boltz-2**, a state-of-the-art biomolecular foundation model that enables joint prediction of complex molecular structures and binding affinities. Boltz-2 represents a significant advancement in computational structural biology, achieving AlphaFold3-level accuracy while demonstrating computational efficiency improvements of three orders of magnitude over traditional physics-based methods.
+This Google Colab notebook provides an easy-to-use interface for **Boltz-2**, a biomolecular foundation model that jointly predicts protein structures and binding affinities. Boltz-2 achieves AlphaFold3-level accuracy while running 1000x faster than traditional physics-based methods.
 
-## Scientific Background
+**🚀 [Click here to open the Boltz-2 Colab notebook](https://colab.research.google.com/drive/1kL3eCnagNs7ZDPjLecCkRlk3w4xrHBFU?usp=sharing)**
 
-Boltz-2 addresses fundamental challenges in biomolecular modeling by:
+## Key Features
 
-- **Unified Architecture**: Joint modeling of structure prediction and binding affinity estimation within a single framework
-- **Multi-Modal Capability**: Support for protein, DNA, RNA, and small molecule ligand complexes
-- **Computational Efficiency**: Significant reduction in computational requirements compared to free energy perturbation (FEP) methods
-- **Accessibility**: Democratization of advanced biomolecular modeling through user-friendly interfaces
+- **🧬 Structure Prediction**: Protein, DNA, RNA, and ligand complexes *(small molecules untested)*
+- **⚡ Binding Affinity**: First deep learning model to approach FEP accuracy  
+- **📊 Batch Processing**: Process multiple sequences or predict all combinations between two FASTA files
+- **☁️ Google Drive Integration**: Automatic upload of results to your Google Drive
+- **🔧 Advanced Configuration**: Comprehensive parameter control for specialized applications
+- **📱 User-Friendly**: Clean step-by-step interface with progress tracking
 
-## Technical Capabilities
+## Input Methods
 
-### Structure Prediction
-- **Molecular Types**: Proteins, nucleic acids (DNA/RNA), and organic ligands
-- **Complex Assembly**: Multi-chain complexes with arbitrary stoichiometry
-- **Accuracy**: Comparable performance to AlphaFold3 on standard benchmarks
-- **Resolution**: Atomic-level structural detail with confidence estimation
+### 1. Manual Input
+Enter sequences directly in the notebook with options for:
+- Multiple protein, DNA, RNA sequences *(DNA/RNA well-tested)*
+- Custom chain IDs and copy numbers
+- Real-time sequence validation
 
-### Binding Affinity Prediction
-- **Methodology**: First deep learning model to approach FEP-level accuracy for binding affinity prediction
-- **Applications**: Drug discovery, protein-protein interactions, nucleic acid binding
-- **Validation**: Extensive benchmarking against experimental datasets
-- **Uncertainty Quantification**: Confidence scores for predicted affinities
+### 2. FASTA Upload - Single File
+Upload a FASTA file to process all sequences individually.
 
-### Performance Characteristics
-- **Speed**: 1000× acceleration compared to traditional molecular dynamics simulations
-- **Scalability**: Efficient batch processing capabilities
-- **Resource Requirements**: Optimized for standard GPU hardware
-- **Reproducibility**: Deterministic results with controlled random seeding
+### 3. FASTA Upload - Combination Mode
+Upload two FASTA files and predict **all combinations** between sequences in FASTA1 and FASTA2. Perfect for:
+- Protein-protein interaction screening
+- Large-scale structural comparisons
+- Systematic binding analysis
 
-## Implementation Features
+## Configuration Parameters
 
-### Input Modalities
-1. **Manual Sequence Entry**: Direct input of molecular sequences with real-time validation
-2. **FASTA File Upload**: Batch processing of multiple sequences from standard bioinformatics formats
-3. **Advanced Configuration**: Comprehensive parameter control for specialized applications
+### Structure Prediction Settings
 
-### Computational Parameters
-- **Structure Refinement**: Configurable recycling iterations for enhanced accuracy
-- **Sampling Strategy**: Multiple diffusion sampling approaches with customizable parameters
-- **Multiple Sequence Alignments (MSA)**: Integration with ColabFold MSA server infrastructure
-- **Covalent Constraints**: Support for user-defined covalent bond restraints
+- **`recycling_steps`** (default: 6): Iterative refinement passes. Each cycle improves local geometry and confidence scores. More steps = better quality but longer runtime.
 
-### Output Generation
-- **Structural Formats**: PDB and mmCIF format compatibility
-- **Visualization**: Interactive 3D molecular visualization using py3Dmol
-- **Data Export**: Comprehensive results packaging with metadata
-- **Quality Metrics**: Per-residue confidence scores and model quality assessments
+- **`sampling_steps`** (default: 200): Diffusion denoising iterations. Controls structure generation quality. More steps = smoother structures but slower processing.
 
-## Methodology
+- **`diffusion_samples`** (default: 5): Number of independent structure predictions per input. More samples increase result reliability.
 
-The Boltz-2 implementation follows established computational protocols:
+- **`max_parallel_samples`** (default: 5): GPU memory management. How many samples processed simultaneously. Critical for large complexes.
 
-1. **Sequence Processing**: Input validation and preprocessing using standard bioinformatics practices
-2. **MSA Generation**: Homology detection via MMseqs2 with optimized search parameters
-3. **Structure Prediction**: Diffusion-based sampling with iterative refinement
-4. **Affinity Calculation**: Integrated binding energy estimation where applicable
-5. **Result Validation**: Automated quality control and confidence assessment
+- **`step_scale`** (default: 1.638): Sampling temperature controlling generation randomness. Optimized default value.
+
+### Binding Affinity Settings
+
+- **`predict_affinity`** (default: False): Enable binding strength prediction (Kd/Ki values). Most reliable for protein-small molecule complexes.
+
+- **`affinity_mw_correction`** (default: False): Apply molecular weight corrections to affinity predictions.
+
+- **`sampling_steps_affinity`** (default: 200): Diffusion steps for affinity model.
+
+- **`diffusion_samples_affinity`** (default: 5): Ensemble size for affinity predictions.
+
+### Output Settings
+
+- **`output_format`**: Choose between `mmcif` (recommended, more metadata) or `pdb` (wider compatibility).
+
+- **`write_full_pae`** (default: False): Generate full Predicted Aligned Error matrices.
+
+- **`write_full_pde`** (default: False): Generate full Predicted Distance Error matrices.
+
+- **`use_potentials`** (default: True): Apply physics-based energy minimization for improved structure quality.
+
+### MSA Configuration
+
+- **`msa_mode`**: 
+  - `mmseqs2_uniref_env`: Standard mode using ColabFold server
+  - `mmseqs2_uniref`: Alternative MMseqs2 mode
+  - `single_sequence`: Skip MSA generation
+  - `custom`: Upload your own MSA file
+
+- **`msa_pairing_strategy`**: 
+  - `greedy`: Pair any taxonomically matching subsets
+  - `complete`: All sequences must match
+
+### Advanced Features
+
+- **Covalent Restraints** *(untested)*: Define custom covalent bonds between specific atoms using format: `CHAIN:RESIDUE:ATOM:CHAIN:RESIDUE:ATOM`
+
+- **Residue Modifications** *(untested)*: Specify amino acid modifications using format: `SEQ_ID:RESIDUE_INDEX:CCD_CODE`
+
+- **Small Molecules** *(untested)*: Support for SMILES and CCD codes - functionality not yet validated
+
+- **Google Drive Integration**: Automatic result upload to specified Google Drive folder with organized file structure.
+
+## Workflow
+
+1. **Installation**: Run the installation cell to set up Boltz-2 and dependencies
+2. **Input Method**: Choose between Manual Input or FASTA Upload
+3. **Configuration**: Configure sequences and prediction parameters
+4. **MSA Settings**: Set up Multiple Sequence Alignment preferences
+5. **Advanced Settings**: Adjust detailed prediction parameters
+6. **Optional**: Configure covalent restraints or residue modifications
+7. **Prediction**: Run Boltz-2 with progress monitoring
+8. **Results**: Download results or access from Google Drive
+
+## Output Files
+
+Each prediction generates:
+- **Structure files**: In mmCIF or PDB format
+- **Confidence scores**: Per-residue confidence metrics
+- **Affinity predictions**: When enabled, binding strength estimates
+- **Results archive**: ZIP file containing all outputs
+- **Google Drive upload**: Automatic cloud storage with organized folder structure
 
 ## System Requirements
 
-### Computational Environment
-- **Platform**: Google Colab with GPU acceleration
-- **Memory**: Minimum 12GB GPU memory recommended
-- **Runtime**: CUDA-compatible GPU (T4, V100, A100 supported)
-- **Dependencies**: Automated installation of PyTorch ecosystem and Boltz-2 framework
-
-### Software Dependencies
-- PyTorch 2.4.1 with CUDA 12.1 support
-- PyTorch Lightning 2.4.0 for distributed training infrastructure
-- Boltz package with integrated model weights
-- ColabFold integration for MSA services
-
-## Usage Protocol
-
-### Standard Workflow
-1. **Environment Setup**: Execute installation cell to configure dependencies
-2. **Input Selection**: Choose between manual entry or file upload modalities
-3. **Parameter Configuration**: Adjust prediction parameters based on system complexity
-4. **Execution**: Run prediction pipeline with progress monitoring
-5. **Result Analysis**: Examine structural outputs and confidence metrics
-6. **Data Export**: Download results in preferred formats
-
-### Advanced Applications
-- **Drug Discovery**: Protein-ligand binding affinity prediction
-- **Protein Design**: Structure-based validation of designed sequences
-- **Comparative Analysis**: Large-scale structural comparison studies
-- **Educational Applications**: Teaching structural biology concepts
-
-## Validation and Benchmarking
-
-Boltz-2 has been extensively validated against:
-- **Protein Data Bank (PDB)**: Comprehensive structural accuracy assessment
-- **Binding Affinity Datasets**: Experimental binding constants from ChEMBL and BindingDB
-- **CASP Targets**: Critical Assessment of protein Structure Prediction benchmarks
-- **Community Standards**: Comparison with AlphaFold3 and other state-of-the-art methods
+- **Platform**: Google Colab with GPU runtime
+- **Memory**: A100 GPU strongly recommended for reliable performance on larger complexes
+- **Runtime**: T4, V100, or A100 GPUs supported (A100 preferred)
+- **Internet**: Required for MSA server access and model downloads
 
 ## Citation
 
-When using this implementation in scientific work, please cite the relevant publications:
+If you use this notebook in your research, please cite the Boltz papers:
+
+**Boltz-2: Towards Accurate and Efficient Binding Affinity Prediction**  
+Passaro, S., Corso, G., Wohlwend, J., Stärk, H., Pattanaik, L., Mendes, P., Velivckovic, P., Barzilay, R., & Jaakkola, T. (2025)  
+*bioRxiv* [https://doi.org/10.1101/2025.06.14.659707](https://doi.org/10.1101/2025.06.14.659707)
+
+**Boltz-1: Democratizing Biomolecular Interaction Modeling**  
+Wohlwend, J., Corso, G., Passaro, S., Stärk, H., Pattanaik, L., Mendes, P., Velivckovic, P., Barzilay, R., & Jaakkola, T. (2024)  
+*bioRxiv* [https://doi.org/10.1101/2024.11.19.624167](https://doi.org/10.1101/2024.11.19.624167)
+
+<details>
+<summary>BibTeX format</summary>
 
 ```bibtex
 @article{passaro2025boltz2,
@@ -123,8 +149,7 @@ When using this implementation in scientific work, please cite the relevant publ
     author={Passaro, Silvia and Corso, Gabriele and Wohlwend, Jeremy and Stärk, Hannes and Pattanaik, Lagnajit and Mendes, Pedro and Velivckovic, Petar and Barzilay, Regina and Jaakkola, Tommi},
     journal={bioRxiv},
     year={2025},
-    doi={10.1101/2025.06.14.659707},
-    url={https://doi.org/10.1101/2025.06.14.659707}
+    doi={10.1101/2025.06.14.659707}
 }
 
 @article{wohlwend2024boltz1,
@@ -132,64 +157,31 @@ When using this implementation in scientific work, please cite the relevant publ
     author={Wohlwend, Jeremy and Corso, Gabriele and Passaro, Silvia and Stärk, Hannes and Pattanaik, Lagnajit and Mendes, Pedro and Velivckovic, Petar and Barzilay, Regina and Jaakkola, Tommi},
     journal={bioRxiv},
     year={2024},
-    doi={10.1101/2024.11.19.624167},
-    url={https://doi.org/10.1101/2024.11.19.624167}
+    doi={10.1101/2024.11.19.624167}
 }
 ```
 
-## Technical Support
+</details>
 
-### Troubleshooting
-Common issues and solutions are documented within the notebook interface. For persistent problems:
+## Troubleshooting
 
-1. **Memory Limitations**: Reduce sequence length or batch size for GPU memory constraints
-2. **Runtime Errors**: Utilize "Factory reset runtime" option in Google Colab
-3. **Network Issues**: Verify internet connectivity for MSA server access
-4. **Parameter Optimization**: Consult documentation for application-specific settings
+**Common Issues:**
+- **GPU Memory**: Reduce `max_parallel_samples` or `diffusion_samples` for large complexes
+- **Runtime Errors**: Use "Factory reset runtime" in Google Colab
+- **Slow MSA**: Switch to `single_sequence` mode if MSA server is slow
+- **Upload Issues**: Check file formats and ensure proper FASTA formatting
 
-### Community Support
-- **Issues**: Report technical problems via GitHub Issues
-- **Documentation**: Refer to inline documentation within notebook cells
-- **Updates**: Monitor repository for model updates and feature enhancements
+## License
 
-## Development and Contributions
-
-### Contributing Guidelines
-1. Fork the repository and create feature branches
-2. Implement changes with comprehensive testing
-3. Ensure compatibility with existing workflow
-4. Submit pull requests with detailed descriptions
-5. Follow established coding standards and documentation practices
-
-### Version Control
-- **Release Management**: Semantic versioning for stable releases
-- **Compatibility**: Backward compatibility maintained where possible
-- **Documentation**: Comprehensive changelog for all modifications
-
-## License and Usage Terms
-
-This implementation is released under the MIT License, permitting unrestricted use in academic and commercial applications. See `LICENSE` file for complete terms.
-
-## Acknowledgments
-
-We acknowledge the following contributions to this work:
-
-- **Boltz Development Team**: Core algorithm development and model training
-- **Google Colab**: Computational infrastructure and accessibility platform  
-- **ColabFold Community**: MSA server infrastructure and bioinformatics tools
+This implementation is released under the MIT License.
 
 ## Related Resources
 
-### Primary Sources
 - [Official Boltz Repository](https://github.com/jwohlwend/boltz)
-- [Boltz-2 Preprint](https://doi.org/10.1101/2025.06.14.659707)
-- [Boltz-1 Publication](https://doi.org/10.1101/2024.11.19.624167)
-
-### Comparative Methods
-- [AlphaFold3](https://www.nature.com/articles/s41586-024-07487-w)
-- [ColabFold](https://github.com/sokrypton/ColabFold)
+- [Boltz-2 Paper](https://doi.org/10.1101/2025.06.14.659707)
+- [ColabFold MSA Server](https://colabfold.com/)
 
 ---
 
-**Repository Maintainer**: Jiorgos Kourelis
-**Last Updated**: 2025-07-23
+**Author**: Jiorgos Kourelis  
+**Last Updated**: January 2025
