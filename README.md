@@ -184,4 +184,4 @@ This implementation is released under the MIT License.
 ---
 
 **Author**: Jiorgos Kourelis  
-**Last Updated**: January 2025
+**Last Updated**: 23 July 2025
