@@ -1,4 +1,4 @@
-# Boltz-2: Google Colab Implementation
+# Boltz-2: Unofficial Google Colab Interface
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/jwohlwend/boltz/main/docs/boltz2_title.png" height="200" alt="Boltz-2 Logo">
@@ -15,14 +15,16 @@
 
 ## Overview
 
-This Google Colab notebook provides an easy-to-use interface for **Boltz-2**, a biomolecular foundation model that jointly predicts protein structures and binding affinities. Boltz-2 achieves AlphaFold3-level accuracy while running 1000x faster than traditional physics-based methods.
+This Google Colab notebook provides an easy-to-use interface for **Boltz-2**, a biomolecular foundation model developed by Passaro et al. (2025) that achieves AlphaFold3-level accuracy while running 1000x faster than traditional physics-based methods. This implementation is simply a user-friendly Colab wrapper that makes the original Boltz-2 model accessible through a step-by-step notebook interface.
 
 **🚀 [Click here to open the Boltz-2 Colab notebook](https://colab.research.google.com/drive/1kL3eCnagNs7ZDPjLecCkRlk3w4xrHBFU?usp=sharing)**
 
-## Key Features
+> **Note**: This is an unofficial Google Colab implementation. All credit for the Boltz-2 model, methodology, and scientific contributions goes to the original authors. This notebook simply provides a convenient interface for running their published model.
 
-- **🧬 Structure Prediction**: Protein, DNA, RNA, and ligand complexes *(small molecules untested)*
-- **⚡ Binding Affinity**: First deep learning model to approach FEP accuracy  
+## Key Features of This Interface
+
+- **🧬 Access to Boltz-2**: Easy access to protein, DNA, RNA, and ligand complex prediction *(small molecules untested)*
+- **⚡ Simplified Workflow**: Run the state-of-the-art Boltz-2 model through a user-friendly notebook
 - **📊 Batch Processing**: Process multiple sequences or predict all combinations between two FASTA files
 - **☁️ Google Drive Integration**: Automatic upload of results to your Google Drive
 - **🔧 Advanced Configuration**: Comprehensive parameter control for specialized applications
@@ -163,6 +165,12 @@ Wohlwend, J., Corso, G., Passaro, S., Stärk, H., Pattanaik, L., Mendes, P., Vel
 
 </details>
 
+## Disclaimer
+
+This Google Colab notebook is an independent implementation created to make the Boltz-2 model more accessible. All scientific credit, model development, and methodological contributions belong to the original Boltz team. This notebook serves purely as a user interface wrapper around their published work and does not represent any original research or model development.
+
+For the official Boltz implementation and latest updates, please visit the [official Boltz repository](https://github.com/jwohlwend/boltz).
+
 ## Troubleshooting
 
 **Common Issues:**
@@ -173,7 +181,7 @@ Wohlwend, J., Corso, G., Passaro, S., Stärk, H., Pattanaik, L., Mendes, P., Vel
 
 ## License
 
-This implementation is released under the MIT License.
+This Colab interface implementation is released under the MIT License. The Boltz-2 model itself is governed by its own license terms - please refer to the [official Boltz repository](https://github.com/jwohlwend/boltz) for model licensing information.
 
 ## Related Resources
 
@@ -184,4 +192,4 @@ This implementation is released under the MIT License.
 ---
 
 **Author**: Jiorgos Kourelis  
-**Last Updated**: 23 July 2025
+**Last Updated**: January 2025
