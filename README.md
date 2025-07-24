@@ -142,6 +142,12 @@ Passaro, S., Corso, G., Wohlwend, J., Stärk, H., Pattanaik, L., Mendes, P., Vel
 Wohlwend, J., Corso, G., Passaro, S., Stärk, H., Pattanaik, L., Mendes, P., Velivckovic, P., Barzilay, R., & Jaakkola, T. (2024)  
 *bioRxiv* [https://doi.org/10.1101/2024.11.19.624167](https://doi.org/10.1101/2024.11.19.624167)
 
+In addition, if you use the automatic MSA generation, please cite:
+
+**ColabFold: making protein folding accessible to all**  
+Mirdita, M., Schütze, K., Moriwaki, Y., Heo, L., Ovchinnikov, S., & Steinegger, M. (2022)  
+*Nature Methods* [https://doi.org/10.1038/s41592-022-01488-1](https://doi.org/10.1038/s41592-022-01488-1)
+
 <details>
 <summary>BibTeX format</summary>
 
@@ -160,6 +166,14 @@ Wohlwend, J., Corso, G., Passaro, S., Stärk, H., Pattanaik, L., Mendes, P., Vel
     journal={bioRxiv},
     year={2024},
     doi={10.1101/2024.11.19.624167}
+}
+
+@article{mirdita2022colabfold,
+    title={ColabFold: making protein folding accessible to all},
+    author={Mirdita, Milot and Sch{\"u}tze, Konstantin and Moriwaki, Yoshitaka and Heo, Lim and Ovchinnikov, Sergey and Steinegger, Martin},
+    journal={Nature methods},
+    year={2022},
+    doi={10.1038/s41592-022-01488-1}
 }
 ```
 
@@ -192,4 +206,4 @@ This Colab interface implementation is released under the MIT License. The Boltz
 ---
 
 **Author**: Jiorgos Kourelis  
-**Last Updated**: July 23, 2025
+**Last Updated**: January 2025
